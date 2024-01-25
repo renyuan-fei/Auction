@@ -38,9 +38,14 @@ public class AuctionRepository : IAuctionRepository
                          .FirstOrDefaultAsync(auction => auction.Id == id);
   }
 
-  public async Task<List<AuctionDto>> GetAuctionsAsync()
+  public async Task<List<AuctionDto>> GetAuctionsAsync(string date)
   {
     var query = _context.Auctions.OrderBy(auction => auction.Item.Make).AsQueryable();
+
+    if (!string.IsNullOrEmpty(date))
+    {
+      query = query.Where(x => x.UpdatedAt.CompareTo(DateTime.Parse(date).ToUniversalTime()) > 0);
+    }
 
     return await query.ProjectTo<AuctionDto>(_mapper.ConfigurationProvider).ToListAsync();
   }

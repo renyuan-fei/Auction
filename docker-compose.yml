@@ -1,0 +1,43 @@
+﻿services:
+  auctionservice:
+    image: auctionservice
+    build:
+      context: .
+      dockerfile: src/AuctionService/Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      - ConnectionString_DefaultConnection="Server=postgres;Port=5432;Database=auction;User Id=postgres;Password=postgrespw;
+      - ASPNETCORE_ENVIRONMENT=Development
+  searchService:
+    image: searchservice
+    build:
+      context: .
+      dockerfile: src/SearchService/Dockerfile
+    depends_on:
+      - mongodb
+    environment:
+      - ConnectionString_MongoDbConnection="mongodb://root:mongopw@mongodb"
+      - ASPNETCORE_ENVIRONMENT=Development
+  postgres:
+    container_name: postgres_container
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgrespw
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgres
+  mongodb:
+    container_name: mongo_container
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=mongopw
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodata:/var/lib/mongodb/data
+volumes:
+  pgdata:
+  mongodata:

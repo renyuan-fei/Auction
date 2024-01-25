@@ -29,9 +29,10 @@ public class AuctionsController : ControllerBase
   }
 
   [ HttpGet ]
-  public async Task<ActionResult<List<AuctionDto>>> GetAllAuctions()
+  public async Task<ActionResult<List<AuctionDto>>> GetAllAuctions(string date)
   {
-    return await _auctionRepository.GetAuctionsAsync();
+
+    return await _auctionRepository.GetAuctionsAsync(date);
   }
 
   [ HttpGet("{id}") ]
