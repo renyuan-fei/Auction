@@ -4,15 +4,17 @@ using MongoDB.Driver;
 using MongoDB.Entities;
 
 using SearchService.Entities;
+using SearchService.Services;
 
 namespace SearchService.Data;
 
-public class DbInitializer
+public static class DbInitializer
 {
   public async static Task InitDb(WebApplication app)
   {
-    await DB.InitAsync("SearchDb", MongoClientSettings
-                           .FromConnectionString(app.Configuration.GetConnectionString("MongoDbConnection")));
+    var connectionString = app.Configuration.GetConnectionString("MongoDbConnection")!;
+
+    await DB.InitAsync("SearchDb", MongoClientSettings.FromConnectionString(connectionString));
 
     await DB.Index<Item>()
             .Key(x => x.Make, KeyType.Text)
@@ -22,16 +24,26 @@ public class DbInitializer
 
     var count = await DB.CountAsync<Item>();
 
-    if (count == 0)
-    {
-      Console.WriteLine("No data - will attempt to seed");
-      var itemData = await File.ReadAllTextAsync("Data/auctions.json");
+    using var scope = app.Services.CreateScope();
 
-      var options = new JsonSerializerOptions{PropertyNameCaseInsensitive = true};
+    var httpClient = scope.ServiceProvider.GetRequiredService<AuctionSvcHttpClient>();
 
-      var item = JsonSerializer.Deserialize<List<Item>>(itemData, options);
+    var items = await httpClient.GetItemsForSearchDbAsync();
 
-      await DB.InsertAsync(item);
-    }
+    Console.WriteLine(items.Count + " returned from the auction service");
+
+    if (items.Count > 0) await DB.SaveAsync(items);
+
+    // if (count == 0)
+    // {
+    //   Console.WriteLine("No data - will attempt to seed");
+    //   var itemData = await File.ReadAllTextAsync("Data/auctions.json");
+    //
+    //   var options = new JsonSerializerOptions{PropertyNameCaseInsensitive = true};
+    //
+    //   var item = JsonSerializer.Deserialize<List<Item>>(itemData, options);
+    //
+    //   await DB.InsertAsync(item);
+    // }
   }
 }

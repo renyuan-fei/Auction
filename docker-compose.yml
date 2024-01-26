@@ -7,7 +7,7 @@
     depends_on:
       - postgres
     environment:
-      - ConnectionString_DefaultConnection="Server=postgres;Port=5432;Database=auction;User Id=postgres;Password=postgrespw;
+      - ConnectionString_DefaultConnection=Server=postgres;Port=5432;Database=auction;User Id=postgres;Password=postgrespw;
       - ASPNETCORE_ENVIRONMENT=Development
   searchService:
     image: searchservice
@@ -16,8 +16,11 @@
       dockerfile: src/SearchService/Dockerfile
     depends_on:
       - mongodb
+      - auctionservice
+      - rabbitmq
     environment:
-      - ConnectionString_MongoDbConnection="mongodb://root:mongopw@mongodb"
+      - ConnectionStrings_MongoDbConnection=mongodb://root:mongopw@mongodb:27017?connect=replicaSet
+      - AuctionServiceUrl=http://auctionservice:80
       - ASPNETCORE_ENVIRONMENT=Development
   postgres:
     container_name: postgres_container
@@ -38,6 +41,11 @@
       - 27017:27017
     volumes:
       - mongodata:/var/lib/mongodb/data
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 5672:5672
+      - 15672:15672
 volumes:
   pgdata:
   mongodata:

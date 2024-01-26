@@ -17,14 +17,16 @@ public class AuctionSvcHttpClient
     _configuration = configuration;
   }
 
-  public async Task<List<Item>?> GetItemsForSearchDbAsync(string searchTerm)
+  public async Task<List<Item>?> GetItemsForSearchDbAsync()
   {
-    var lastUpdated = await DB.Find<Item, string>()
-                              .Sort(x => x.Descending(item => item.UpdatedAt))
-                              .Project(item =>
-                                           item.UpdatedAt.ToString(CultureInfo
-                                               .InvariantCulture))
-                              .ExecuteFirstAsync();
+    var lastUpdatedResult = await DB.Find<Item, string>()
+                                    .Sort(x => x.Descending(x => x.UpdatedAt))
+                                    .Project(x => x.UpdatedAt.ToString())
+                                    .ExecuteFirstAsync();
+
+    // 如果 lastUpdatedResult 为 null，则使用 DateTime.MinValue
+    var lastUpdated = lastUpdatedResult != null ? DateTime.Parse(lastUpdatedResult) : DateTime.MinValue;
+
 
     return await _client.GetFromJsonAsync<List<Item>>(_configuration["AuctionServiceUrl"]
                                                     + "/api/auctions?date="
