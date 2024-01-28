@@ -24,6 +24,16 @@
       - ConnectionStrings_MongoDbConnection=mongodb://root:mongopw@mongodb:27017?connect=replicaSet
       - AuctionServiceUrl=http://auctionservice:80
       - ASPNETCORE_ENVIRONMENT=Development
+  identityService:
+    image: identityservice
+    build:
+      context: .
+      dockerfile: src/IdentityService/Dockerfile
+    depends_on:
+      - postgres
+    environment:
+#      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionString_DefaultConnection=Server=postgres;Port=5432;Database=identity;User Id=postgres;Password=postgrespw;
   postgres:
     container_name: postgres_container
     image: postgres
