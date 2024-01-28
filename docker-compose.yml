@@ -9,6 +9,8 @@
     environment:
       - ConnectionString_DefaultConnection=Server=postgres;Port=5432;Database=auction;User Id=postgres;Password=postgrespw;
       - ASPNETCORE_ENVIRONMENT=Development
+    ports: # 端口映射
+      - "443:7240"
   searchService:
     image: searchservice
     build:

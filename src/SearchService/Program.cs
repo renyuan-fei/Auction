@@ -1,16 +1,10 @@
-using System.Diagnostics.CodeAnalysis;
-
 using MassTransit;
-
-using MongoDB.Driver;
-using MongoDB.Entities;
 
 using Polly;
 using Polly.Extensions.Http;
 
 using SearchService.Consumers;
 using SearchService.Data;
-using SearchService.Entities;
 using SearchService.Services;
 
 namespace SearchService;
@@ -31,7 +25,9 @@ public class Program
     builder.Services.AddMassTransit(x =>
     {
       x.AddConsumersFromNamespaceContaining<AuctionCreatedConsumer>();
+
       x.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter("search", false));
+
       x.UsingRabbitMq((context, cfg) =>
       {
         cfg.ConfigureEndpoints(context);

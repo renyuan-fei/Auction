@@ -1,5 +1,7 @@
 using AuctionService.Entities;
 
+using MassTransit;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace AuctionService.Data;
@@ -16,6 +18,10 @@ public class AuctionDbContext : DbContext
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     base.OnModelCreating(modelBuilder);
+
+    modelBuilder.AddInboxStateEntity();
+    modelBuilder.AddOutboxMessageEntity();
+    modelBuilder.AddOutboxStateEntity();
 
     // // 配置 Auction 和 Item 之间的一对一关系
     modelBuilder.Entity<Auction>()
