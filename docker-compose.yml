@@ -32,7 +32,7 @@
     depends_on:
       - postgres
     environment:
-#      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionString_DefaultConnection=Server=postgres;Port=5432;Database=identity;User Id=postgres;Password=postgrespw;
   postgres:
     container_name: postgres_container
