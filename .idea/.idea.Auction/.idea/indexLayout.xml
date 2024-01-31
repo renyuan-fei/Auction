@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="UserContentModel">
+    <attachedFolders>
+      <Path>frontend</Path>
+      <Path>tests</Path>
+    </attachedFolders>
+    <explicitIncludes>
+      <Path>.gitignore</Path>
+    </explicitIncludes>
+    <explicitExcludes />
+  </component>
+</project>

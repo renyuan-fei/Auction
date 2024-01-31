@@ -1,5 +1,3 @@
-using System.Globalization;
-
 using MongoDB.Entities;
 
 using SearchService.Entities;
@@ -25,8 +23,9 @@ public class AuctionSvcHttpClient
                                     .ExecuteFirstAsync();
 
     // 如果 lastUpdatedResult 为 null，则使用 DateTime.MinValue
-    var lastUpdated = lastUpdatedResult != null ? DateTime.Parse(lastUpdatedResult) : DateTime.MinValue;
-
+    var lastUpdated = lastUpdatedResult != null
+        ? DateTime.Parse(lastUpdatedResult)
+        : DateTime.MinValue;
 
     return await _client.GetFromJsonAsync<List<Item>>(_configuration["AuctionServiceUrl"]
                                                     + "/api/auctions?date="

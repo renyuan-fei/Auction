@@ -14,6 +14,7 @@ namespace IdentityService.Services;
 public class CustomProfileService : IProfileService
 {
   private readonly UserManager<ApplicationUser> _userManager;
+
   public CustomProfileService(UserManager<ApplicationUser> userManager)
   {
     _userManager = userManager;
@@ -24,14 +25,13 @@ public class CustomProfileService : IProfileService
     var user = await _userManager.GetUserAsync(context.Subject);
     var existingClaims = await _userManager.GetClaimsAsync(user);
 
-    var claims = new List<Claim> { new Claim("username", user.UserName), };
+    var claims = new List<Claim> { new("username", user.UserName) };
 
     context.IssuedClaims.AddRange(claims);
-    context.IssuedClaims.Add(existingClaims.FirstOrDefault(x => x.Type == JwtClaimTypes.Name));
+
+    context.IssuedClaims.Add(existingClaims.FirstOrDefault(x => x.Type
+                                                            == JwtClaimTypes.Name));
   }
 
-  public Task IsActiveAsync(IsActiveContext context)
-  {
-    return Task.CompletedTask;
-  }
+  public Task IsActiveAsync(IsActiveContext context) { return Task.CompletedTask; }
 }

@@ -45,11 +45,16 @@ public class Program
       // Configures RabbitMQ as the message broker for MassTransit.
       x.UsingRabbitMq((context, cfg) =>
       {
-        cfg.Host(builder.Configuration["RabbitMq:Host"], "/", host =>
-        {
-          host.Username(builder.Configuration.GetValue("RabbitMq:Username", "guest"));
-          host.Password(builder.Configuration.GetValue("RabbitMq:Password", "guest"));
-        });
+        cfg.Host(builder.Configuration["RabbitMq:Host"],
+                 "/",
+                 host =>
+                 {
+                   host.Username(builder.Configuration.GetValue("RabbitMq:Username",
+                                   "guest"));
+
+                   host.Password(builder.Configuration.GetValue("RabbitMq:Password",
+                                   "guest"));
+                 });
 
         // Automatically configures endpoints for the discovered consumers.
         cfg.ConfigureEndpoints(context);
@@ -65,7 +70,6 @@ public class Program
              options.TokenValidationParameters.NameClaimType = "username";
            });
 
-
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
     var app = builder.Build();
@@ -76,10 +80,7 @@ public class Program
 
     app.MapControllers();
 
-    try
-    {
-      DbInitializer.InitDb(app);
-    }
+    try { DbInitializer.InitDb(app); }
     catch (Exception e)
     {
       Console.WriteLine(e);

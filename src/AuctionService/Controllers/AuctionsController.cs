@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 using AuctionService.DTO;
 using AuctionService.Entities;
 using AuctionService.Interface;
@@ -14,7 +9,6 @@ using Contracts;
 using MassTransit;
 
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuctionService.Controllers;
@@ -23,9 +17,9 @@ namespace AuctionService.Controllers;
 [ ApiController ]
 public class AuctionsController : ControllerBase
 {
-  private readonly IPublishEndpoint   _publishEndpoint;
   private readonly IAuctionRepository _auctionRepository;
   private readonly IMapper            _mapper;
+  private readonly IPublishEndpoint   _publishEndpoint;
 
   public AuctionsController(
       IMapper            mapper,
@@ -53,7 +47,7 @@ public class AuctionsController : ControllerBase
     return auction;
   }
 
-  [Authorize]
+  [ Authorize ]
   [ HttpPost ]
   public async Task<ActionResult<AuctionDto>> CreateAuction(CreateAuctionDto auctionDto)
   {
@@ -74,7 +68,7 @@ public class AuctionsController : ControllerBase
     return CreatedAtAction(nameof(GetAuctionById), new { auction.Id }, newAuction);
   }
 
-  [Authorize]
+  [ Authorize ]
   [ HttpPut("{id}") ]
   public async Task<ActionResult> UpdateAuction(
       Guid             id,
@@ -85,7 +79,7 @@ public class AuctionsController : ControllerBase
     if (auction == null) return NotFound();
 
     if (auction.Seller != User.Identity!.Name!) return Forbid();
-    
+
     auction.Item.Make = updateAuctionDto.Make ?? auction.Item.Make;
     auction.Item.Model = updateAuctionDto.Model ?? auction.Item.Model;
     auction.Item.Color = updateAuctionDto.Color ?? auction.Item.Color;
@@ -100,8 +94,8 @@ public class AuctionsController : ControllerBase
 
     return BadRequest("Problem saving changes");
   }
-  
-  [Authorize]
+
+  [ Authorize ]
   [ HttpDelete("{id}") ]
   public async Task<ActionResult> DeleteAuction(Guid id)
   {

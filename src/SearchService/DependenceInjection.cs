@@ -1,6 +1,3 @@
-using MongoDB.Driver;
-using MongoDB.Entities;
-
 namespace SearchService;
 
 public static class DependenceInjection

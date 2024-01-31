@@ -14,7 +14,7 @@
 
         <div class="row">
             <div class="col-sm-8">
-                <partial name="_ValidationSummary" />
+                <partial name="_ValidationSummary"/>
             </div>
         </div>
 
@@ -23,7 +23,7 @@
                 <form asp-page="/Device/Index" method="get">
                     <div class="form-group">
                         <label for="userCode">User Code:</label>
-                        <input class="form-control" for="userCode" name="userCode" autofocus />
+                        <input class="form-control" for="userCode" name="userCode" autofocus/>
                     </div>
 
                     <button class="btn btn-primary" name="button">Submit</button>
@@ -39,7 +39,9 @@ else
         <div class="lead">
             @if (Model.View.ClientLogoUrl != null)
             {
-                <div class="client-logo"><img src="@Model.View.ClientLogoUrl"></div>
+                <div class="client-logo">
+                    <img src="@Model.View.ClientLogoUrl">
+                </div>
             }
             <h1>
                 @Model.View.ClientName
@@ -51,12 +53,12 @@ else
 
         <div class="row">
             <div class="col-sm-8">
-                <partial name="_ValidationSummary" />
+                <partial name="_ValidationSummary"/>
             </div>
         </div>
 
         <form asp-page="/Device/Index">
-            <input asp-for="Input.UserCode" type="hidden" />
+            <input asp-for="Input.UserCode" type="hidden"/>
             <div class="row">
                 <div class="col-sm-8">
                     @if (Model.View.IdentityScopes.Any())
@@ -70,7 +72,7 @@ else
                                 <ul class="list-group list-group-flush">
                                     @foreach (var scope in Model.View.IdentityScopes)
                                     {
-                                        <partial name="_ScopeListItem" model="@scope" />
+                                        <partial name="_ScopeListItem" model="@scope"/>
                                     }
                                 </ul>
                             </div>
@@ -88,7 +90,7 @@ else
                                 <ul class="list-group list-group-flush">
                                     @foreach (var scope in Model.View.ApiScopes)
                                     {
-                                        <partial name="_ScopeListItem" model="scope" />
+                                        <partial name="_ScopeListItem" model="scope"/>
                                     }
                                 </ul>
                             </div>

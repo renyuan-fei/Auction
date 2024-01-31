@@ -20,10 +20,7 @@ public class AuctionRepository : IAuctionRepository
     _mapper = mapper;
   }
 
-  public void AddAuction(Auction? auction)
-  {
-    _context.Auctions.Add(auction);
-  }
+  public void AddAuction(Auction? auction) { _context.Auctions.Add(auction); }
 
   public async Task<AuctionDto?> GetAuctionByIdAsync(Guid id)
   {
@@ -44,16 +41,15 @@ public class AuctionRepository : IAuctionRepository
 
     if (!string.IsNullOrEmpty(date))
     {
-      query = query.Where(x => x.UpdatedAt.CompareTo(DateTime.Parse(date).ToUniversalTime()) > 0);
+      query = query.Where(x => x.UpdatedAt.CompareTo(DateTime.Parse(date)
+                                                         .ToUniversalTime())
+                             > 0);
     }
 
     return await query.ProjectTo<AuctionDto>(_mapper.ConfigurationProvider).ToListAsync();
   }
 
-  public void RemoveAuction(Auction? auction)
-  {
-    _context.Auctions.Remove(auction);
-  }
+  public void RemoveAuction(Auction? auction) { _context.Auctions.Remove(auction); }
 
   public async Task<bool> SaveChangesAsync()
   {

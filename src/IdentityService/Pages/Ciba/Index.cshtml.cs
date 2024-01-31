@@ -3,36 +3,45 @@
 
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IdentityService.Pages.Ciba;
 
-[AllowAnonymous]
-[SecurityHeaders]
+[ AllowAnonymous ]
+[ SecurityHeaders ]
 public class IndexModel : PageModel
 {
-    public BackchannelUserLoginRequest LoginRequest { get; set; }
+  private readonly IBackchannelAuthenticationInteractionService
+      _backchannelAuthenticationInteraction;
 
-    private readonly IBackchannelAuthenticationInteractionService _backchannelAuthenticationInteraction;
-    private readonly ILogger<IndexModel> _logger;
+  private readonly ILogger<IndexModel> _logger;
 
-    public IndexModel(IBackchannelAuthenticationInteractionService backchannelAuthenticationInteractionService, ILogger<IndexModel> logger)
+  public IndexModel(
+      IBackchannelAuthenticationInteractionService
+          backchannelAuthenticationInteractionService,
+      ILogger<IndexModel> logger)
+  {
+    _backchannelAuthenticationInteraction = backchannelAuthenticationInteractionService;
+    _logger = logger;
+  }
+
+  public BackchannelUserLoginRequest LoginRequest { get; set; }
+
+  public async Task<IActionResult> OnGet(string id)
+  {
+    LoginRequest =
+        await _backchannelAuthenticationInteraction.GetLoginRequestByInternalIdAsync(id);
+
+    if (LoginRequest == null)
     {
-        _backchannelAuthenticationInteraction = backchannelAuthenticationInteractionService;
-        _logger = logger;
+      _logger.LogWarning("Invalid backchannel login id {id}", id);
+
+      return RedirectToPage("/Home/Error/Index");
     }
 
-    public async Task<IActionResult> OnGet(string id)
-    {
-        LoginRequest = await _backchannelAuthenticationInteraction.GetLoginRequestByInternalIdAsync(id);
-        if (LoginRequest == null)
-        {
-            _logger.LogWarning("Invalid backchannel login id {id}", id);
-            return RedirectToPage("/Home/Error/Index");
-        }
-
-        return Page();
-    }
+    return Page();
+  }
 }

@@ -7,12 +7,13 @@ using SearchService.Entities;
 
 namespace SearchService.Controllers;
 
-[ApiController]
-[Route("api/search")]
+[ ApiController ]
+[ Route("api/search") ]
 public class SearchController : ControllerBase
 {
-  [HttpGet]
-  public async Task<ActionResult<List<Item>>> SearchItems([FromQuery] SearchParams searchParams)
+  [ HttpGet ]
+  public async Task<ActionResult<List<Item>>> SearchItems(
+      [ FromQuery ] SearchParams searchParams)
   {
     var query = DB.PagedSearch<Item, Item>();
 

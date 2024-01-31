@@ -3,11 +3,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IdentityService.Pages.Device;
 
-[SecurityHeaders]
-[Authorize]
+[ SecurityHeaders ]
+[ Authorize ]
 public class SuccessModel : PageModel
 {
-    public void OnGet()
-    {
-    }
+  public void OnGet() { }
 }

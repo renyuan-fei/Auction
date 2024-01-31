@@ -14,12 +14,11 @@ public static class DependenceInjection
   {
     services.AddDbContext<AuctionDbContext>(options =>
                                                 options.UseNpgsql(configuration
-                                                    .GetConnectionString("DefaultConnection")));
+                                                         .GetConnectionString("DefaultConnection")));
 
     services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
     services.AddScoped<IAuctionRepository, AuctionRepository>();
-
 
     return services;
   }

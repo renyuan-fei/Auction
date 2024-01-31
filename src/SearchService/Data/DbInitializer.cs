@@ -1,5 +1,3 @@
-using System.Text.Json;
-
 using MongoDB.Driver;
 using MongoDB.Entities;
 
@@ -14,7 +12,8 @@ public static class DbInitializer
   {
     var connectionString = app.Configuration.GetConnectionString("MongoDbConnection")!;
 
-    await DB.InitAsync("SearchDb", MongoClientSettings.FromConnectionString(connectionString));
+    await DB.InitAsync("SearchDb",
+                       MongoClientSettings.FromConnectionString(connectionString));
 
     await DB.Index<Item>()
             .Key(x => x.Make, KeyType.Text)

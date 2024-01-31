@@ -2,34 +2,43 @@
 // See LICENSE in the project root for license information.
 
 using System.ComponentModel.DataAnnotations;
+
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IdentityService.Pages.Ciba;
 
-[SecurityHeaders]
-[Authorize]
+[ SecurityHeaders ]
+[ Authorize ]
 public class AllModel : PageModel
 {
-    public IEnumerable<BackchannelUserLoginRequest> Logins { get; set; }
+  private readonly IBackchannelAuthenticationInteractionService
+      _backchannelAuthenticationInteraction;
 
-    [BindProperty, Required]
-    public string Id { get; set; }
-    [BindProperty, Required]
-    public string Button { get; set; }
+  public AllModel(
+      IBackchannelAuthenticationInteractionService
+          backchannelAuthenticationInteractionService)
+  {
+    _backchannelAuthenticationInteraction = backchannelAuthenticationInteractionService;
+  }
 
-    private readonly IBackchannelAuthenticationInteractionService _backchannelAuthenticationInteraction;
+  public IEnumerable<BackchannelUserLoginRequest> Logins { get; set; }
 
-    public AllModel(IBackchannelAuthenticationInteractionService backchannelAuthenticationInteractionService)
-    {
-        _backchannelAuthenticationInteraction = backchannelAuthenticationInteractionService;
-    }
+  [ BindProperty ]
+  [ Required ]
+  public string Id { get; set; }
 
-    public async Task OnGet()
-    {
-        Logins = await _backchannelAuthenticationInteraction.GetPendingLoginRequestsForCurrentUserAsync();
-    }
+  [ BindProperty ]
+  [ Required ]
+  public string Button { get; set; }
+
+  public async Task OnGet()
+  {
+    Logins = await _backchannelAuthenticationInteraction
+        .GetPendingLoginRequestsForCurrentUserAsync();
+  }
 }
