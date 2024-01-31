@@ -45,6 +45,12 @@ public class Program
       // Configures RabbitMQ as the message broker for MassTransit.
       x.UsingRabbitMq((context, cfg) =>
       {
+        cfg.Host(builder.Configuration["RabbitMq:Host"], "/", host =>
+        {
+          host.Username(builder.Configuration.GetValue("RabbitMq:Username", "guest"));
+          host.Password(builder.Configuration.GetValue("RabbitMq:Password", "guest"));
+        });
+
         // Automatically configures endpoints for the discovered consumers.
         cfg.ConfigureEndpoints(context);
       });
@@ -53,7 +59,7 @@ public class Program
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
            .AddJwtBearer(options =>
            {
-             options.Authority = builder.Configuration["IdentityService"];
+             options.Authority = builder.Configuration["IdentityServiceUrl"];
              options.RequireHttpsMetadata = false;
              options.TokenValidationParameters.ValidateAudience = false;
              options.TokenValidationParameters.NameClaimType = "username";

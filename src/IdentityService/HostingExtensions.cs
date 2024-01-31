@@ -33,7 +33,7 @@ internal static class HostingExtensions
 
                    if (builder.Environment.IsEnvironment("Docker"))
                    {
-                       options.IssuerUri = "identity-svc";
+                       options.IssuerUri = "identity-service";
                    }
 
                    if (builder.Environment.IsProduction())

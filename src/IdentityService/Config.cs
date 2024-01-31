@@ -28,6 +28,19 @@ public static class Config
                 AllowedGrantTypes = { GrantType.ResourceOwnerPassword },
                 RedirectUris = {"https://www.getpostman.com/oauth2/callback"},
                 AllowedScopes = {"openid", "profile", "auctionApp"},
+            },
+            new Client
+            {
+                    ClientId = "nextApp",
+                    ClientName = "nextApp",
+                    ClientSecrets = {new Secret(config["ClientSecret"].Sha256())},
+                    AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
+                    RequirePkce = false,
+                    RedirectUris = {config["ClientApp"] + "/api/auth/callback/id-server"},
+                    AllowOfflineAccess = true,
+                    AllowedScopes = {"openid", "profile", "auctionApp"},
+                    AccessTokenLifetime = 3600*24*30,
+                    AlwaysIncludeUserClaimsInIdToken = true
             }
         };
 }

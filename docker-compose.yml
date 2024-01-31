@@ -1,30 +1,44 @@
 ﻿services:
-  auctionservice:
+  auction-service:
     image: auctionservice
     build:
       context: .
       dockerfile: src/AuctionService/Dockerfile
     depends_on:
+      - rabbitmq
       - postgres
     environment:
-      - ConnectionString_DefaultConnection=Server=postgres;Port=5432;Database=auction;User Id=postgres;Password=postgrespw;
       - ASPNETCORE_ENVIRONMENT=Development
-    ports: # 端口映射
-      - "443:7240"
-  searchService:
+      - ASPNETCORE_URLS=http://+:80;
+      - ASPNETCORE_URLS=http://+:7777
+      - RabbitMq__Host=rabbitmq
+      - ConnectionStrings__DefaultConnection=Server=postgres;Port=5432;User Id=postgres;Password=postgrespw;Database=auction
+      - IdentityServiceUrl=http://identity-service
+      - Kestrel__Endpoints__Grpc__Protocols=Http2
+      - Kestrel__Endpoints__Grpc__Url=http://+:7777
+      - Kestrel__Endpoints__WebApi__Protocols=Http1
+      - Kestrel__Endpoints__WebApi__Url=http://+:80
+    ports:
+      - 7001:80
+      - 7777:7777
+  search-service:
     image: searchservice
     build:
       context: .
       dockerfile: src/SearchService/Dockerfile
     depends_on:
       - mongodb
-      - auctionservice
+      - auction-service
       - rabbitmq
     environment:
-      - ConnectionStrings_MongoDbConnection=mongodb://root:mongopw@mongodb:27017?connect=replicaSet
-      - AuctionServiceUrl=http://auctionservice:80
       - ASPNETCORE_ENVIRONMENT=Development
-  identityService:
+      - ASPNETCORE_URLS=http://+:80
+      - RabbitMq__Host=rabbitmq
+      - ConnectionStrings__MongoDbConnection=mongodb://root:mongopw@mongodb
+      - AuctionServiceUrl=http://auction-service
+    ports:
+      - 7002:80
+  identity-service:
     image: identityservice
     build:
       context: .
@@ -32,8 +46,21 @@
     depends_on:
       - postgres
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionString_DefaultConnection=Server=postgres;Port=5432;Database=identity;User Id=postgres;Password=postgrespw;
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ConnectionStrings__DefaultConnection=Server=postgres;Port=5432;User Id=postgres;Password=postgrespw;Database=identity
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - 5001:80
+  gateway-service:
+    image: geatewayservice
+    build:
+      context: .
+      dockerfile: src/GatewayService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - 6001:80
   postgres:
     container_name: postgres_container
     image: postgres
