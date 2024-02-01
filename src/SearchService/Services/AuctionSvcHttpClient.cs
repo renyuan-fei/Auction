@@ -1,3 +1,5 @@
+using System.Globalization;
+
 using MongoDB.Entities;
 
 using SearchService.Entities;
@@ -19,7 +21,7 @@ public class AuctionSvcHttpClient
   {
     var lastUpdatedResult = await DB.Find<Item, string>()
                                     .Sort(x => x.Descending(x => x.UpdatedAt))
-                                    .Project(x => x.UpdatedAt.ToString())
+                                    .Project(x => x.UpdatedAt.ToString(CultureInfo.CurrentCulture))
                                     .ExecuteFirstAsync();
 
     // 如果 lastUpdatedResult 为 null，则使用 DateTime.MinValue
