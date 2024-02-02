@@ -26,7 +26,7 @@ export const CarImage = ({imageUrl}: CarImageProps) => {
                    : 'grayscale-0 blu0 scale-100'}
                    `}
                sizes='(max-width:768px) 100vw,(max-width:1200px) 50vw, 25vw'
-               onLoadingComplete={() => setIsLoaded(false)}
+               onLoad={() => setIsLoaded(false)}
         />
     );
 };

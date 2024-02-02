@@ -1,4 +1,5 @@
-import {AiOutlineCar} from 'react-icons/ai'
+import {Search} from "@/app/nav/Search";
+import {Logo} from "@/app/nav/Logo";
 
 export const Navbar = () => {
     return (
@@ -6,11 +7,8 @@ export const Navbar = () => {
             className={
                 "sticky top-0 z-50 flex justify-between bg-white p-5 items-center text-gray-800 shadow-md"
             }>
-            <div className={"flex items-center gap-2 font-semibold text-red-500"}>
-                <AiOutlineCar size={34}/>
-                <div>Carsties Auctions</div>
-            </div>
-            <div>Middle</div>
+            <Logo/>
+            <Search/>
             <div>Right</div>
         </header>
     );
