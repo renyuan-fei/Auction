@@ -36,6 +36,8 @@ export const useParamsStore = createWithEqualityFn<State & Actions>()((set) => (
 
     setParams: (newParams: Partial<State>) => {
         set((state) => {
+            console.log(newParams)
+
             if (newParams.pageNumber) {
                 return {...state, pageNumber: newParams.pageNumber}
             } else {

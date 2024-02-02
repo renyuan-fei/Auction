@@ -10,6 +10,7 @@ import {Filters} from "@/app/auctions/Filters";
 import {shallow} from "zustand/shallow";
 import {useParamsStore} from "@/hooks/useParamsStore";
 import qs from "query-string";
+import {EmptyFilter} from "@components/EmptyFilter";
 
 export const Listings = () => {
     const [data, setData] = useState<PagedResult<Auction>>();
@@ -18,10 +19,8 @@ export const Listings = () => {
         pageNumber: state.pageNumber,
         pageSize: state.pageSize,
         searchTerm: state.searchTerm,
-        // orderBy: state.orderBy,
-        // filterBy: state.filterBy,
-        // seller: state.seller,
-        // winner: state.winner
+        orderBy: state.orderBy,
+        filterBy: state.filterBy,
     }), shallow);
 
     const setParams = useParamsStore(state => state.setParams);
@@ -39,22 +38,29 @@ export const Listings = () => {
 
     if (!data) return <h3>Loading...</h3>
 
+    if (data.totalCount === 0) return <EmptyFilter showReset={true}/>
+
     return (
         <>
             <Filters/>
-            <div className='grid grid-cols-4 gap-6'>
-                {data && data.results.map((auction: Auction) => (
-                    <AuctionCard auction={auction} key={auction.id}/>
-                ))}
-            </div>
-            <div className='flex justify-center mt-4'>
-                {
-                    data.pageCount > 1 &&
-                    <AppPagination currentPage={params.pageNumber}
-                                   pageCount={data.pageCount}
-                                   pageChanged={setPageNumber}/>
-                }
-            </div>
+            {data.totalCount === 0
+                ? (<EmptyFilter showReset={true}/>)
+                : (<>
+                    <div className='grid grid-cols-4 gap-6'>
+                        {data && data.results.map((auction: Auction) => (
+                            <AuctionCard auction={auction} key={auction.id}/>
+                        ))}
+                    </div>
+                    <div className='flex justify-center mt-4'>
+                        {
+                            data.pageCount > 1 &&
+                            <AppPagination currentPage={params.pageNumber}
+                                           pageCount={data.pageCount}
+                                           pageChanged={setPageNumber}/>
+                        }
+                    </div>
+                </>)
+            }
         </>
     );
 };
