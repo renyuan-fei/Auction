@@ -25,7 +25,7 @@ const renderer = ({days, hours, minutes, seconds, completed}: rendererProps) => 
                         flex 
                         justify-between
             ${completed
-            ? " bg-red-600"
+            ? "bg-red-600"
             : (days === 0 && hours < 10)
                 ? 'bg-amber-600'
                 : 'bg-green-600'}`
