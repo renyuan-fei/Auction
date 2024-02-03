@@ -3,12 +3,20 @@
 import {AiOutlineCar} from "react-icons/ai";
 import {useParamsStore} from "@/hooks/useParamsStore";
 import {useCallback} from "react";
+import {usePathname, useRouter} from "next/navigation";
 
 export const Logo = () => {
+    const router = useRouter();
+    const pathname = usePathname();
+
     const reset = useParamsStore(state => state.reset);
-    const onDivClick = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+
+    const onReset = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+        if (pathname !== '/') {
+            router.push('/');
+        }
         reset();
-    }, [reset]);
+    }, [reset, pathname, router]);
 
     return (
         <div
@@ -19,7 +27,7 @@ export const Logo = () => {
             font-semibold
             text-red-500
             cursor-pointer'
-            onClick={onDivClick}>
+            onClick={onReset}>
             <AiOutlineCar size={34}/>
             <div>Carsties Auctions</div>
         </div>

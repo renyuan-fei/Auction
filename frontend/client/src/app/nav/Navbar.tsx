@@ -1,7 +1,12 @@
 import {Search} from "@/app/nav/Search";
 import {Logo} from "@/app/nav/Logo";
+import {LoginButton} from "@/app/nav/LoginButton";
+import {getCurrentUser} from "@auctions/authActions";
+import {UserActions} from "@/app/nav/UserActions";
 
-export const Navbar = () => {
+export const Navbar = async () => {
+    const user = await getCurrentUser();
+
     return (
         <header
             className={
@@ -9,7 +14,9 @@ export const Navbar = () => {
             }>
             <Logo/>
             <Search/>
-            <div>Right</div>
+            {user
+                ? <UserActions user={user}/>
+                : <LoginButton/>}
         </header>
     );
 };
