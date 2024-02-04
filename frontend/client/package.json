@@ -17,13 +17,17 @@
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.0.1",
-    "zustand": "^4.5.0"
+    "zustand": "^4.5.0",
+    "react-hook-form": "^7.50.0",
+    "react-datepicker": "^6.1.0",
+    "react-hot-toast": "^2.4.1"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-datepicker": "^4.19.5",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",

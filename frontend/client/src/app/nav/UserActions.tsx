@@ -6,25 +6,47 @@ import {User} from "next-auth";
 import {HiCog, HiUser} from "react-icons/hi";
 import {AiFillCar, AiFillTrophy, AiOutlineLogout} from "react-icons/ai";
 import {signOut} from "next-auth/react";
+import {usePathname, useRouter} from "next/navigation";
+import {useParamsStore} from "@/hooks/useParamsStore";
+import {useCallback} from "react";
 
 type UserActionProps = {
-    user: Partial<User>
+    user: User
 }
 
 export const UserActions = ({user}: UserActionProps) => {
+    const router = useRouter();
+    const pathname = usePathname();
+    const setParams = useParamsStore(state => state.setParams);
+    
+    const handleSetWinner = useCallback(() => {
+        setParams({winner: user.username, seller: undefined});
+        if (pathname !== '/') {
+            router.push('/');
+        }
+    }, [setParams, user.username, pathname, router]);
+
+    const handleSetSeller = useCallback(() => {
+        setParams({winner: undefined, seller: user.username});
+        if (pathname !== '/') {
+            router.push('/');
+        }
+    }, [setParams, user.username, pathname, router]);
+
+
     return (
         <Dropdown
             inline
             label={`Welcome ${user.name}`}
         >
-            <Dropdown.Item icon={HiUser}>
+            <Dropdown.Item icon={HiUser} onClick={handleSetSeller}>
                 My Auctions
             </Dropdown.Item>
-            <Dropdown.Item icon={AiFillTrophy}>
-                Auctions won
+            <Dropdown.Item icon={AiFillTrophy} onClick={handleSetWinner}>
+                    Auctions won
             </Dropdown.Item>
             <Dropdown.Item icon={AiFillCar}>
-                <Link href='/'>
+                <Link href='/auctions/create'>
                     Sell my car
                 </Link>
             </Dropdown.Item>
@@ -33,8 +55,9 @@ export const UserActions = ({user}: UserActionProps) => {
                     Session (dev only)
                 </Link>
             </Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item icon={AiOutlineLogout} onClick={() => signOut({callbackUrl: '/'})}>
+            <Dropdown.Divider/>
+            <Dropdown.Item icon={AiOutlineLogout}
+                           onClick={() => signOut({callbackUrl: '/'})}>
                 Sign out
             </Dropdown.Item>
         </Dropdown>

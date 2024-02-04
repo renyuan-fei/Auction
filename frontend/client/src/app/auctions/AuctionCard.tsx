@@ -1,13 +1,14 @@
 import {CountdownTimer} from "@/app/auctions/CountdownTimer";
 import {CarImage} from "@/app/auctions/CarImage";
 import {Auction} from "@/types/Auction";
+import Link from "next/link";
 
 type AuctionCardProps = {
     auction: Auction;
 };
 export const AuctionCard = ({auction}: AuctionCardProps) => {
     return (
-        <a href='#' className='group'>
+        <Link href={`/auctions/details/${auction.id}`} className='group'>
             <div className='aspect-w-16 aspect-h-10 w-full bg-gray-200 aspect-video rounded-lg overflow-hidden'>
                 <div>
                      <CarImage  imageUrl={auction.imageUrl}/>
@@ -20,6 +21,6 @@ export const AuctionCard = ({auction}: AuctionCardProps) => {
                 <h3 className='text-gray-700'>{auction.make} {auction.model}</h3>
                 <p className='font-semibold text-sm'>{auction.year}</p>
             </div>
-        </a>
+        </Link>
     );
 };

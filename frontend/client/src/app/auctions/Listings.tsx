@@ -8,9 +8,9 @@ import {PagedResult} from "@/types/pagedResult";
 import {Filters} from "@/app/auctions/Filters";
 import {shallow} from "zustand/shallow";
 import {useParamsStore} from "@/hooks/useParamsStore";
-import qs from "query-string";
 import {EmptyFilter} from "@components/EmptyFilter";
 import {getData} from "@auctions/auctionActions";
+import qs from "query-string";
 
 export const Listings = () => {
     const [data, setData] = useState<PagedResult<Auction>>();
@@ -21,6 +21,8 @@ export const Listings = () => {
         searchTerm: state.searchTerm,
         orderBy: state.orderBy,
         filterBy: state.filterBy,
+        seller: state.seller,
+        winner: state.winner,
     }), shallow);
 
     const url = qs.stringifyUrl({url: '', query: params})
