@@ -64,31 +64,6 @@ export const AuctionForm = ({ auction }: AuctionFormProps) => {
 
     }, [pathname, auction, router]);
 
-    const onSubmit = async (data: FieldValues) => {
-        console.log(data);
-        try {
-            let id = '';
-            let res;
-            if (pathname === '/auctions/create') {
-                res = await createAuction(data);
-                console.log(res);
-                id = res.id;
-            } else {
-                if (auction) {
-                    res = await updateAuction(data, auction.id);
-                    id = auction.id;
-                }
-            }
-            if (res.error) {
-                console.log(res.error);
-                throw res.error;
-            }
-            router.push(`/auctions/details/${id}`)
-        } catch (error: any) {
-            toast.error(error.status + ' ' + error.message)
-        }
-    }
-
 
     return (
         <form className='flex flex-col mt-3' onSubmit={handleSubmit(onFormSubmit)}>
@@ -121,21 +96,24 @@ export const AuctionForm = ({ auction }: AuctionFormProps) => {
                        rules={{required: 'Mileage is required'}}/>
             </div>
 
-            <Input label='Image URL' name='imageUrl' control={control}
-                   rules={{required: 'Image URL is required'}}/>
+            {pathname === '/auctions/create' &&
+                <>
+                  <Input label='Image URL' name='imageUrl' control={control}
+                         rules={{ required: 'Image URL is required' }} />
 
-            <div className='grid grid-cols-2 gap-3'>
-                <Input label='Reserve Price (enter 0 if no reserve)'
-                       name='reservePrice' control={control} type='number'
-                       rules={{required: 'Reserve price is required'}}/>
-                <DateInput
-                    label='Auction end date/time'
-                    name='auctionEnd'
-                    control={control}
-                    dateFormat='dd MMMM yyyy h:mm a'
-                    showTimeSelect
-                    rules={{required: 'Auction end date is required'}}/>
-            </div>
+                  <div className='grid grid-cols-2 gap-3'>
+                    <Input label='Reserve Price (enter 0 if no reserve)'
+                           name='reservePrice' control={control} type='number'
+                           rules={{ required: 'Reserve price is required' }} />
+                    <DateInput
+                        label='Auction end date/time'
+                        name='auctionEnd'
+                        control={control}
+                        dateFormat='dd MMMM yyyy h:mm a'
+                        showTimeSelect
+                        rules={{ required: 'Auction end date is required' }} />
+                  </div>
+                </>}
 
 
             <div className='flex justify-between'>
