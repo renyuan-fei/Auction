@@ -51,6 +51,23 @@
       - ASPNETCORE_URLS=http://+:80
     ports:
       - 5001:80
+  bid-service:
+    image: bidservice
+    build:
+      context: .
+      dockerfile: src/BiddingService/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - RabbitMq__Host=rabbitmq
+      - ConnectionStrings__BidDbConnection=mongodb://root:mongopw@mongodb
+      - IdentityServiceUrl=http://identity-svc
+      - GrpcAuction=http://auction-svc:7777
+    ports:
+      - 7003:80
+    depends_on:
+      - mongodb
+      - rabbitmq
   gateway-service:
     image: geatewayservice
     build:
