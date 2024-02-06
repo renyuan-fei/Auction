@@ -20,6 +20,8 @@ public static class DependenceInjection
 
     services.AddScoped<IAuctionRepository, AuctionRepository>();
 
+    services.AddGrpc();
+
     return services;
   }
 }

@@ -1,5 +1,6 @@
 using AuctionService.Consumers;
 using AuctionService.Data;
+using AuctionService.Services;
 
 using MassTransit;
 
@@ -70,8 +71,6 @@ public class Program
              options.TokenValidationParameters.NameClaimType = "username";
            });
 
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-
     var app = builder.Build();
 
     app.UseAuthentication();
@@ -79,6 +78,7 @@ public class Program
     app.UseAuthorization();
 
     app.MapControllers();
+    app.MapGrpcService<GrpcAuctionService>();
 
     try { DbInitializer.InitDb(app); }
     catch (Exception e)

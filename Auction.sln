@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItem", "SolutionIte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiddingService", "src\BiddingService\BiddingService.csproj", "{CFE2A775-7311-4857-8424-707916CA10C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService", "src\NotificationService\NotificationService.csproj", "{90DFABC6-6298-4E81-9781-9C3983C3D3B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,5 +53,9 @@ Global
 		{CFE2A775-7311-4857-8424-707916CA10C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFE2A775-7311-4857-8424-707916CA10C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFE2A775-7311-4857-8424-707916CA10C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90DFABC6-6298-4E81-9781-9C3983C3D3B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90DFABC6-6298-4E81-9781-9C3983C3D3B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90DFABC6-6298-4E81-9781-9C3983C3D3B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90DFABC6-6298-4E81-9781-9C3983C3D3B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

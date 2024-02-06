@@ -8,13 +8,13 @@ using AutoMapper;
 using BiddingService.DTO;
 using BiddingService.Entities;
 using BiddingService.Enums;
+using BiddingService.Services;
 
 using Contracts;
 
 using MassTransit;
 
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using MongoDB.Entities;
@@ -26,13 +26,18 @@ namespace BiddingService.Controllers
   [ ApiController ]
   public class BidsController : ControllerBase
   {
-    private readonly IMapper _mapper;
-    private readonly IPublishEndpoint _publishEndpoint;
+    private readonly IMapper           _mapper;
+    private readonly IPublishEndpoint  _publishEndpoint;
+    private readonly GrpcAuctionClient _grpcClient;
 
-    public BidsController(IMapper mapper, IPublishEndpoint publishEndpoint)
+    public BidsController(
+        IMapper           mapper,
+        IPublishEndpoint  publishEndpoint,
+        GrpcAuctionClient grpcClient)
     {
       _mapper = mapper;
       _publishEndpoint = publishEndpoint;
+      _grpcClient = grpcClient;
     }
 
     [ Authorize ]
@@ -43,7 +48,12 @@ namespace BiddingService.Controllers
     {
       var auctions = await DB.Find<Auction>().OneAsync(auctionId);
 
-      if (auctions == null) { return NotFound(); }
+      if (auctions == null)
+      {
+        auctions = _grpcClient.GetAuction(auctionId);
+
+        if (auctions == null) return BadRequest("Cannot accept bids on this auction at this time");
+      }
 
       if (auctions.Seller == User.Identity!.Name)
       {
