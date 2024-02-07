@@ -1,7 +1,7 @@
 import {Heading} from "@components/Heading";
 import {AuctionForm} from "@/app/auctions/AuctionForm";
 
-export default () => {
+export default function Create() {
     return (
         <div className='
         mx-auto

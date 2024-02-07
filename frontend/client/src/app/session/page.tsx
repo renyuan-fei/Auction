@@ -1,9 +1,10 @@
-import {getSession, getTokenWorkaround} from "@auctions/authActions";
 import {Heading} from "@components/Heading";
 import AuthTest from "@/app/session/AuthTest";
+import {getSession} from "next-auth/react";
+import {getTokenWorkaround} from "@actions/authActions";
 
 
-export default async () => {
+export default async function session ()  {
     const session = await getSession();
     const token = await getTokenWorkaround();
 

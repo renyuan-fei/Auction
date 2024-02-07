@@ -1,10 +1,10 @@
 'use server'
 
 import {getServerSession} from "next-auth";
-import {authOptions} from "@/app/api/auth/[...nextauth]/route";
 import {getToken} from "next-auth/jwt";
 import {NextApiRequest} from "next";
 import {cookies, headers} from "next/headers";
+import {authOptions} from "@utils/authOptions";
 
 export const getSession = async () => {
     return await getServerSession(authOptions);

@@ -1,5 +1,12 @@
 ﻿version: '3.8'
 
+#virtual network for client jump to identity-service by domain name
+networks:
+  custom:
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+
 services:
   auction-service:
     image: auctionservice
@@ -20,8 +27,10 @@ services:
       - Kestrel__Endpoints__WebApi__Protocols=Http1
       - Kestrel__Endpoints__WebApi__Url=http://+:80
     ports:
-      - 7001:80
-      - 7777:7777
+      - "7001:80"
+      - "7777:7777"
+    networks:
+      custom:
   search-service:
     image: searchservice
     build:
@@ -38,7 +47,9 @@ services:
       - ConnectionStrings__MongoDbConnection=mongodb://root:mongopw@mongodb
       - AuctionServiceUrl=http://auction-service
     ports:
-      - 7002:80
+      - "7002:80"
+    networks:
+      custom:
   identity-service:
     image: identityservice
     build:
@@ -50,8 +61,12 @@ services:
       - ASPNETCORE_ENVIRONMENT=Docker
       - ConnectionStrings__DefaultConnection=Server=postgres;Port=5432;User Id=postgres;Password=postgrespw;Database=identity
       - ASPNETCORE_URLS=http://+:80
+      - VIRTUAL_HOST=id.carsties.com
     ports:
-      - 5001:80
+      - "80:80"
+    networks:
+      custom:
+        ipv4_address: 10.5.0.200
   bid-service:
     image: bidservice
     build:
@@ -68,7 +83,9 @@ services:
       - IdentityServiceUrl=http://identity-service
       - GrpcAuction=http://auction-service:7777
     ports:
-      - 7003:80
+      - "7003:80"
+    networks:
+      custom:
   notify-service:
     image: notifyservice
     build:
@@ -79,9 +96,11 @@ services:
       - ASPNETCORE_URLS=http://+:80
       - RabbitMq__Host=rabbitmq
     ports:
-      - 7004:80
+      - "7004:80"
     depends_on:
       - rabbitmq
+    networks:
+      custom:
   gateway-service:
     image: gatewayservice
     build:
@@ -91,16 +110,20 @@ services:
       - ASPNETCORE_ENVIRONMENT=Docker
       - ASPNETCORE_URLS=http://+:80
     ports:
-      - 6001:80
+      - "6001:80"
+    networks:
+      custom:
   postgres:
     container_name: postgres_container
     image: postgres
     environment:
       - POSTGRES_PASSWORD=postgrespw
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      custom:
   mongodb:
     container_name: mongo_container
     image: mongo
@@ -108,15 +131,38 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=mongopw
     ports:
-      - 27017:27017
+      - "27017:27017"
     volumes:
       - mongodata:/data/db
+    networks:
+      custom:
   rabbitmq:
     image: rabbitmq:3-management-alpine
     ports:
-      - 5672:5672
-      - 15672:15672
-
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      custom:
+  client:
+    image: client
+    build:
+      context: .
+      dockerfile: frontend/client/Dockerfile
+    volumes:
+      - /var/lib/web/data
+    ports:
+      - "3000:3000"
+    extra_hosts:
+      - id.carsties.com:10.5.0.200
+    environment:
+      - NEXTAUTH_SECRET=I3DfhyrhvBT1o7bbaK1gCVgOMngHoUdjPfD3Qy99WXZnmKESBo
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_URL_INTERNAL=http://client:3000
+      - API_URL=http://gateway-service/
+      - IDENTITY_SERVER_URL=http://id.carsties.com
+      - NEXT_PUBLIC_NOTIFY_URL=http://gateway-service/notifications
+    networks:
+      custom:
 volumes:
   pgdata:
   mongodata:

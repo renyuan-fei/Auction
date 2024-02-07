@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItem", "SolutionIte
 		global.json = global.json
 		Auction.sln = Auction.sln
 		Auction.sln.DotSettings.user = Auction.sln.DotSettings.user
+		update_hosts.sh = update_hosts.sh
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiddingService", "src\BiddingService\BiddingService.csproj", "{CFE2A775-7311-4857-8424-707916CA10C3}"

@@ -49,7 +49,10 @@
       ],
       "@api/*": [
         "./src/api/*"
-      ]
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
     }
   },
   "include": [

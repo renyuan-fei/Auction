@@ -7,7 +7,7 @@ type props = {
         id: string;
     };
 };
-export default async ({params}:props) => {
+export default async function Update({params}:props)  {
     const data = await getDetailedViewData(params.id);
 
     return (

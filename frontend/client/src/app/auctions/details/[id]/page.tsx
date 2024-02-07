@@ -14,7 +14,7 @@ type props = {
     };
 };
 
-export default async ({params}: props) => {
+export default async function Detail({params}: props) {
     const data = await getDetailedViewData(params.id);
     const user = await getCurrentUser();
 

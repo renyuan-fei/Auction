@@ -18,6 +18,8 @@ type SignalRProviderProps = {
     user: User | null
 }
 
+const BaseUrl = process.env.NEXT_PUBLIC_NOTIFY_URL;
+
 export const SignalRProvider = ({children, user}: SignalRProviderProps) => {
     const [connection, setConnection] = useState<HubConnection | null>(null);
     const setCurrentPrice = useAuctionsStore(state => state.setCurrentPrice);
@@ -25,7 +27,7 @@ export const SignalRProvider = ({children, user}: SignalRProviderProps) => {
 
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
-            .withUrl('http://localhost:6001/notifications')
+            .withUrl(BaseUrl + 'notifications')
             .withAutomaticReconnect()
             .build();
 
