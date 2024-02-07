@@ -1,9 +1,9 @@
 'use client';
 
-import {useParamsStore} from "@/hooks/useParamsStore";
 import {Heading} from "@components/Heading";
 import {Button} from "flowbite-react";
 import {signIn} from "next-auth/react";
+import {useParamsStore} from "@store/useParamsStore";
 
 type EmptyFilterProps = {
     title?: string
@@ -23,13 +23,14 @@ export const EmptyFilter = ({
 
     return (
         <div className='h-[40vh] flex flex-col gap-2 justify-center items-center shadow-lg'>
-            <Heading title={title} subtitle={subtitle} center />
+            <Heading title={title} subtitle={subtitle} center/>
             <div className='mt-4'>
                 {showReset && (
                     <Button outline onClick={reset}>Remove Filters</Button>
                 )}
                 {showLogin && (
-                    <Button outline onClick={() => signIn('id-server', {callbackUrl})}>Login</Button>
+                    <Button outline
+                            onClick={() => signIn('id-server', {callbackUrl})}>Login</Button>
                 )}
             </div>
         </div>

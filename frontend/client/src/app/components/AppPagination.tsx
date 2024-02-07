@@ -1,6 +1,6 @@
-import { useCallback } from 'react';
-import { Pagination } from "flowbite-react";
-import { useParamsStore } from "@/hooks/useParamsStore";
+import {useCallback} from 'react';
+import {Pagination} from "flowbite-react";
+import {useParamsStore} from "@store/useParamsStore";
 
 type AppPaginationProps = {
     currentPage: number,
@@ -15,7 +15,7 @@ export const AppPagination = ({
 
     // 使用 useCallback 包装 onPageChange 处理函数
     const onPageChange = useCallback((pageNumber: number) => {
-        setParams({ pageNumber });
+        setParams({pageNumber});
     }, [setParams]);
 
     return (

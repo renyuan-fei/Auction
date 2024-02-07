@@ -19,7 +19,7 @@ public class Program
 
       x.UsingRabbitMq((context, cfg) =>
       {
-        cfg.UseRetry(r =>
+        cfg.UseMessageRetry(r =>
         {
           r.Handle<RabbitMqConnectionException>();
           r.Interval(5, TimeSpan.FromSeconds(10));
@@ -30,10 +30,10 @@ public class Program
                  host =>
                  {
                    host.Username(builder.Configuration.GetValue("RabbitMq:Username",
-                                   "guest"));
+                                      "guest"));
 
                    host.Password(builder.Configuration.GetValue("RabbitMq:Password",
-                                   "guest"));
+                                      "guest"));
                  });
 
         cfg.ConfigureEndpoints(context);
@@ -41,7 +41,6 @@ public class Program
     });
 
     builder.Services.AddSignalR();
-
 
     var app = builder.Build();
 

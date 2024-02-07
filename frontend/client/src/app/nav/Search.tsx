@@ -1,8 +1,8 @@
 'use client';
 
 import {FaSearch} from "react-icons/fa";
-import {useParamsStore} from "@/hooks/useParamsStore";
-import React, {useCallback, useState} from "react";
+import React, {useCallback} from "react";
+import {useParamsStore} from "@store/useParamsStore";
 
 export const Search = () => {
     const setParams = useParamsStore(state => state.setParams);

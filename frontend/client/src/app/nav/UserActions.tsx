@@ -1,14 +1,14 @@
 'use client';
 
-import {Button, Dropdown} from "flowbite-react";
+import {Dropdown} from "flowbite-react";
 import Link from "next/link";
 import {User} from "next-auth";
 import {HiCog, HiUser} from "react-icons/hi";
 import {AiFillCar, AiFillTrophy, AiOutlineLogout} from "react-icons/ai";
 import {signOut} from "next-auth/react";
 import {usePathname, useRouter} from "next/navigation";
-import {useParamsStore} from "@/hooks/useParamsStore";
 import {useCallback} from "react";
+import {useParamsStore} from "@store/useParamsStore";
 
 type UserActionProps = {
     user: User
@@ -18,7 +18,7 @@ export const UserActions = ({user}: UserActionProps) => {
     const router = useRouter();
     const pathname = usePathname();
     const setParams = useParamsStore(state => state.setParams);
-    
+
     const handleSetWinner = useCallback(() => {
         setParams({winner: user.username, seller: undefined});
         if (pathname !== '/') {
@@ -43,7 +43,7 @@ export const UserActions = ({user}: UserActionProps) => {
                 My Auctions
             </Dropdown.Item>
             <Dropdown.Item icon={AiFillTrophy} onClick={handleSetWinner}>
-                    Auctions won
+                Auctions won
             </Dropdown.Item>
             <Dropdown.Item icon={AiFillCar}>
                 <Link href='/auctions/create'>

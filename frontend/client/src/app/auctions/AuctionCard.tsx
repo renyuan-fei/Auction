@@ -2,6 +2,7 @@ import {CountdownTimer} from "@/app/auctions/CountdownTimer";
 import {CarImage} from "@/app/auctions/CarImage";
 import {Auction} from "@/types/Auction";
 import Link from "next/link";
+import {CurrentBid} from "@/app/auctions/CurrentBid";
 
 type AuctionCardProps = {
     auction: Auction;
@@ -11,9 +12,14 @@ export const AuctionCard = ({auction}: AuctionCardProps) => {
         <Link href={`/auctions/details/${auction.id}`} className='group'>
             <div className='aspect-w-16 aspect-h-10 w-full bg-gray-200 aspect-video rounded-lg overflow-hidden'>
                 <div>
-                     <CarImage  imageUrl={auction.imageUrl}/>
+                    <CarImage imageUrl={auction.imageUrl}/>
                     <div className='absolute bottom-2 left-2'>
                         <CountdownTimer auctionEnd={auction.auctionEnd}/>
+                    </div>
+
+                    <div className='absolute top-2 right-2'>
+                        <CurrentBid reservePrice={auction.reservePrice}
+                                    amount={auction.currentHighBid}/>
                     </div>
                 </div>
             </div>

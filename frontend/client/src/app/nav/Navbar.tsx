@@ -1,8 +1,8 @@
 import {Search} from "@/app/nav/Search";
 import {Logo} from "@/app/nav/Logo";
 import {LoginButton} from "@/app/nav/LoginButton";
-import {getCurrentUser} from "@auctions/authActions";
 import {UserActions} from "@/app/nav/UserActions";
+import {getCurrentUser} from "@actions/authActions";
 
 export const Navbar = async () => {
     const user = await getCurrentUser();

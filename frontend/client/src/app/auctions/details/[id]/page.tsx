@@ -6,6 +6,7 @@ import {CountdownTimer} from "@/app/auctions/CountdownTimer";
 import {EditButton} from "@/app/auctions/details/[id]/EditButton";
 import {DeleteButton} from "@/app/auctions/details/[id]/DeleteButton";
 import {DetailedSpecs} from "@/app/auctions/details/[id]/DetailedSpecs";
+import {BidList} from "@/app/auctions/details/[id]/BidList";
 
 type props = {
     params: {
@@ -14,11 +15,8 @@ type props = {
 };
 
 export default async ({params}: props) => {
-    console.log(params.id)
     const data = await getDetailedViewData(params.id);
     const user = await getCurrentUser();
-
-
 
     return (
         <div>
@@ -40,11 +38,13 @@ export default async ({params}: props) => {
                 </div>
             </div>
 
-            <div className='grid grid-cols-2 gap-6 mt-3'>
+            <div className='grid grid-cols-2 gap-6 mt-3 mb-20'>
                 <div className='w-full bg-gray-200 aspect-h-10 aspect-w-16 rounded-lg overflow-hidden'>
                     <CarImage imageUrl={data.imageUrl}/>
                 </div>
+                <BidList user={user} auction={data}/>
             </div>
+
 
             <div className='mt-3 grid grid-cols-1 rounded-lg'>
                 <DetailedSpecs auction={data}/>

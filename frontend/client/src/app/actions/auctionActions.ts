@@ -1,17 +1,20 @@
 'use server';
-
+// use server means
+// that the code will be executed only on the server side rather than the client side
+// No CORS issues
 import {PagedResult} from "@/types/pagedResult";
 import {Auction} from "@/types/Auction";
-import {getTokenWorkaround} from "@auctions/authActions";
 import {fetchWrapper} from "@/lib/fetchWrapper";
 import {FieldValues} from "react-hook-form";
 import {revalidatePath} from "next/cache";
+import {Bid} from "@/types/Bid";
+import {getTokenWorkaround} from "@actions/authActions";
 
-export const getData = async (query: string) : Promise<PagedResult<Auction>> => {
+export const getData = async (query: string): Promise<PagedResult<Auction>> => {
     return await fetchWrapper.get(`search/${query}`);
 }
 
-export const createAuction = async (data: FieldValues) : Promise<Auction> => {
+export const createAuction = async (data: FieldValues): Promise<Auction> => {
     return await fetchWrapper.post('auctions', data);
 }
 
@@ -28,6 +31,15 @@ export async function updateAuction(data: FieldValues, id: string) {
 export async function deleteAuction(id: string) {
     return await fetchWrapper.del(`auctions/${id}`);
 }
+
+export async function getBidsForAuction(id: string): Promise<Bid[]> {
+    return await fetchWrapper.get(`bids/${id}`);
+}
+
+export async function placeBidForAuction(auctionId: string, amount: number) {
+    return await fetchWrapper.post(`bids?auctionId=${auctionId}&amount=${amount}`, {})
+}
+
 export const updateAuctionTest = async () => {
     const data = {
         mileage: Math.floor(Math.random() * 100000) + 1
@@ -39,7 +51,7 @@ export const updateAuctionTest = async () => {
         method: 'PUT',
         headers: {
             'Content-type': 'application/json',
-            'Authorization': 'Bearer '+ token?.access_token
+            'Authorization': 'Bearer ' + token?.access_token
         },
         body: JSON.stringify(data)
     });
