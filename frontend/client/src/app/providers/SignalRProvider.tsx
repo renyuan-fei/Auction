@@ -18,21 +18,33 @@ type SignalRProviderProps = {
     user: User | null
 }
 
-const BaseUrl = process.env.NEXT_PUBLIC_NOTIFY_URL;
+const Url = process.env.NEXT_PUBLIC_NOTIFY_URL;
 
 export const SignalRProvider = ({children, user}: SignalRProviderProps) => {
     const [connection, setConnection] = useState<HubConnection | null>(null);
     const setCurrentPrice = useAuctionsStore(state => state.setCurrentPrice);
     const addBid = useBidStore(state => state.addBid);
+    const apiUrl = process.env.NODE_ENV === 'production'
+        ? 'https://api.carsties.com/notifications'
+        : process.env.NEXT_PUBLIC_NOTIFY_URL
 
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
-            .withUrl(BaseUrl + 'notifications')
+            .withUrl(apiUrl!)
             .withAutomaticReconnect()
             .build();
 
         setConnection(newConnection);
-    }, []);
+    }, [apiUrl]);
+
+    // useEffect(() => {
+    //     const newConnection = new HubConnectionBuilder()
+    //         .withUrl(Url!)
+    //         .withAutomaticReconnect()
+    //         .build();
+    //
+    //     setConnection(newConnection);
+    // }, []);
 
     useEffect(() => {
         if (connection) {

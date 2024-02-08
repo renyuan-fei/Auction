@@ -7,6 +7,13 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/IdentityService/IdentityService.csproj", "src/IdentityService/"]
+COPY ["src/AuctionService/AuctionService.csproj", "src/AuctionService/"]
+COPY ["src/SearchService/SearchService.csproj", "src/SearchService/"]
+COPY ["src/BiddingService/BiddingService.csproj", "src/BiddingService/"]
+COPY ["src/GatewayService/GatewayService.csproj", "src/GatewayService/"]
+COPY ["src/NotificationService/NotificationService.csproj", "src/NotificationService/"]
+COPY ["src/Contracts/Contracts.csproj", "src/Contracts/"]
+
 RUN dotnet restore "src/IdentityService/IdentityService.csproj"
 COPY . .
 WORKDIR "/src/src/IdentityService"

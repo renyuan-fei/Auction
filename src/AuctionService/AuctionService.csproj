@@ -24,12 +24,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="..\.dockerignore">
-            <Link>.dockerignore</Link>
-        </Content>
-    </ItemGroup>
-
-    <ItemGroup>
         <Folder Include="Controllers\"/>
     </ItemGroup>
 
@@ -39,6 +33,12 @@
 
     <ItemGroup>
         <Protobuf Include="protos/auctions.proto" GrpcServices="Server" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>

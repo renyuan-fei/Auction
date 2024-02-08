@@ -6,10 +6,17 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["NotificationService/NotificationService.csproj", "NotificationService/"]
-RUN dotnet restore "NotificationService/NotificationService.csproj"
+COPY ["src/NotificationService/NotificationService.csproj", "src/NotificationService/"]
+COPY ["src/AuctionService/AuctionService.csproj", "src/AuctionService/"]
+COPY ["src/SearchService/SearchService.csproj", "src/SearchService/"]
+COPY ["src/BiddingService/BiddingService.csproj", "src/BiddingService/"]
+COPY ["src/GatewayService/GatewayService.csproj", "src/GatewayService/"]
+COPY ["src/IdentityService/IdentityService.csproj", "src/IdentityService/"]
+COPY ["src/Contracts/Contracts.csproj", "src/Contracts/"]
+
+RUN dotnet restore "src/NotificationService/NotificationService.csproj"
 COPY . .
-WORKDIR "/src/NotificationService"
+WORKDIR "/src/src/NotificationService"
 RUN dotnet build "NotificationService.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish

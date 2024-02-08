@@ -24,28 +24,17 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
+      <Folder Include="Controllers\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Contracts\Contracts.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Protobuf Include="protos\auctions.proto">
-        <GrpcServices>Server</GrpcServices>
-        <Access>Public</Access>
-        <ProtoCompile>True</ProtoCompile>
-        <CompileOutputs>True</CompileOutputs>
-        <OutputDir>obj\Debug/net7.0/</OutputDir>
-        <Generator>MSBuild:Compile</Generator>
-      </Protobuf>
     </ItemGroup>
 
     <ItemGroup>

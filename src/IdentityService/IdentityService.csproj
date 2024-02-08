@@ -26,12 +26,16 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="..\..\.dockerignore">
-            <Link>.dockerignore</Link>
-        </Content>
+        <_ContentIncludedByDefault Remove="keys\is-signing-key-FBA99FF3BC854DBAF9939450C3B97700.json"/>
     </ItemGroup>
 
     <ItemGroup>
-        <_ContentIncludedByDefault Remove="keys\is-signing-key-FBA99FF3BC854DBAF9939450C3B97700.json"/>
+      <Content Include="..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="keys\" />
     </ItemGroup>
 </Project>
