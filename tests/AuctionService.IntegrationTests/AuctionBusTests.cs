@@ -46,7 +46,7 @@ public class AuctionBusTests : IAsyncLifetime
   {
     using var scope = _factory.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<AuctionDbContext>();
-    DbHelper.ReinitDbForTests(db);
+    DbContextHelper.ReinitDbForTests(db);
     return Task.CompletedTask;
   }
 

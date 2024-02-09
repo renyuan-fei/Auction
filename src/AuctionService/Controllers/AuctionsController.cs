@@ -32,12 +32,12 @@ public class AuctionsController : ControllerBase
   }
 
   [ HttpGet ]
-  public async Task<ActionResult<List<AuctionDto>>> GetAllAuctions(string date)
+  public async Task<ActionResult<List<AuctionDto>>> GetAllAuctions(string? date)
   {
     return await _auctionRepository.GetAuctionsAsync(date);
   }
 
-  [ HttpGet("{id:guid}") ]
+  [ HttpGet("{id}") ]
   public async Task<ActionResult<AuctionDto>> GetAuctionById(Guid id)
   {
     var auction = await _auctionRepository.GetAuctionByIdAsync(id);
@@ -69,7 +69,7 @@ public class AuctionsController : ControllerBase
   }
 
   [ Authorize ]
-  [ HttpPut("{id:guid}") ]
+  [ HttpPut("{id}") ]
   public async Task<ActionResult> UpdateAuction(
       Guid             id,
       UpdateAuctionDto updateAuctionDto)
@@ -96,12 +96,14 @@ public class AuctionsController : ControllerBase
   }
 
   [ Authorize ]
-  [ HttpDelete("{id:guid}") ]
+  [ HttpDelete("{id}") ]
   public async Task<ActionResult> DeleteAuction(Guid id)
   {
     var auction = await _auctionRepository.GetAuctionEntityById(id);
 
     if (auction == null) return NotFound();
+
+    if (auction.Seller != User.Identity!.Name) return Forbid();
 
     _auctionRepository.RemoveAuction(auction);
 

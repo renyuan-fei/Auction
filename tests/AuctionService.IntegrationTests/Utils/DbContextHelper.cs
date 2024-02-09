@@ -3,19 +3,19 @@ using AuctionService.Entities;
 
 namespace AuctionService.IntegrationTests.Utils;
 
-public static class DbHelper
+public static class DbContextHelper
 {
-    public static void InitDbForTests(AuctionDbContext db)
+    public static void InitDbForTests(AuctionDbContext dbContext)
     {
-        db.Auctions.AddRange(GetAuctionsForTest());
-        db.SaveChanges();
+        dbContext.Auctions.AddRange(GetAuctionsForTest());
+        dbContext.SaveChanges();
     }
 
-    public static void ReinitDbForTests(AuctionDbContext db)
+    public static void ReinitDbForTests(AuctionDbContext dbContext)
     {
-        db.Auctions.RemoveRange(db.Auctions);
-        db.SaveChanges();
-        InitDbForTests(db);
+        dbContext.Auctions.RemoveRange(dbContext.Auctions);
+        dbContext.SaveChanges();
+        InitDbForTests(dbContext);
     }
 
     private static List<Auction> GetAuctionsForTest()

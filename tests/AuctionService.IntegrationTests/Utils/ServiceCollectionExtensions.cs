@@ -24,6 +24,6 @@ public static class ServiceCollectionExtensions
     var db = scopedServices.GetRequiredService<AuctionDbContext>();
 
     db.Database.Migrate();
-    DbHelper.InitDbForTests(db);
+    DbContextHelper.InitDbForTests(db);
   }
 }

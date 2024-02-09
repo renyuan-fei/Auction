@@ -35,7 +35,7 @@ public class AuctionRepository : IAuctionRepository
                          .FirstOrDefaultAsync(auction => auction.Id == id);
   }
 
-  public async Task<List<AuctionDto>> GetAuctionsAsync(string date)
+  public async Task<List<AuctionDto>> GetAuctionsAsync(string? date)
   {
     var query = _context.Auctions.OrderBy(auction => auction.Item.Make).AsQueryable();
 

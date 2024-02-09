@@ -25,13 +25,13 @@ public class AuctionControllerTests : IAsyncLifetime
     [Fact]
     public async Task GetAuctions_ShouldReturn3Auctions()
     {
-        // arrange?
+        // arrange
 
         // act
         var response = await _httpClient.GetFromJsonAsync<List<AuctionDto>>("api/auctions");
 
         // assert
-        Assert.Equal(3, response.Count);
+        Assert.Equal(3, response!.Count);
     }
 
     [Fact]
@@ -149,7 +149,7 @@ public class AuctionControllerTests : IAsyncLifetime
     {
         using var scope = _factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AuctionDbContext>();
-        DbHelper.ReinitDbForTests(db);
+        DbContextHelper.ReinitDbForTests(db);
         return Task.CompletedTask;
     }
 
