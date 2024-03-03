@@ -67,13 +67,12 @@ public class Program
 
     app.MapControllers();
 
-    try { DbInitializer.InitDb(app).Wait(); }
-    catch (Exception e)
+    app.Lifetime.ApplicationStarted.Register(async () =>
     {
-      Console.WriteLine(e);
-
-      throw;
-    }
+      await Policy.Handle<TimeoutException>()
+                  .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(10))
+                  .ExecuteAndCaptureAsync(async () => await DbInitializer.InitDb(app));
+    });
 
     app.Run();
   }

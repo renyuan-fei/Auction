@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using MongoDB.Driver;
 using MongoDB.Entities;
 
+using Polly;
 
 namespace BiddingService;
 
@@ -65,8 +66,13 @@ public class Program
 
     app.MapControllers();
 
-    DB.InitAsync("BidDb", MongoClientSettings.FromConnectionString(builder
-        .Configuration.GetConnectionString("BidDbConnection"))).Wait();
+    Policy.Handle<TimeoutException>()
+          .WaitAndRetryAsync(5, retryAttempt => TimeSpan.FromSeconds(10))
+          .ExecuteAndCaptureAsync(async () =>
+          {
+            await DB.InitAsync("BidDb", MongoClientSettings
+                                   .FromConnectionString(builder.Configuration.GetConnectionString("BidDbConnection")));
+          });
 
     app.Run();
   }
