@@ -9,7 +9,7 @@ networks:
 
 services:
   auction-service:
-    image: auctionservice
+    image: arandomname/auctionservice
     build:
       context: .
       dockerfile: src/AuctionService/Dockerfile
@@ -32,7 +32,7 @@ services:
     networks:
       custom:
   search-service:
-    image: searchservice
+    image: arandomname/searchservice
     build:
       context: .
       dockerfile: src/SearchService/Dockerfile
@@ -51,7 +51,7 @@ services:
     networks:
       custom:
   identity-service:
-    image: identityservice
+    image: arandomname/identityservice
     build:
       context: .
       dockerfile: src/IdentityService/Dockerfile
@@ -67,7 +67,7 @@ services:
       custom:
         ipv4_address: 10.5.0.200
   bid-service:
-    image: bidservice
+    image: arandomname/bidservice
     build:
       context: .
       dockerfile: src/BiddingService/Dockerfile
@@ -86,7 +86,7 @@ services:
     networks:
       custom:
   notify-service:
-    image: notifyservice
+    image: arandomname/notifyservice
     build:
       context: .
       dockerfile: src/NotificationService/Dockerfile
@@ -101,7 +101,7 @@ services:
     networks:
       custom:
   gateway-service:
-    image: gatewayservice
+    image: arandomname/gatewayservice
     build:
       context: .
       dockerfile: src/GatewayService/Dockerfile
@@ -143,7 +143,7 @@ services:
     networks:
       custom:
   client:
-    image: client
+    image: arandomname/client
     build:
       context: .
       dockerfile: frontend/client/Dockerfile
