@@ -6,6 +6,10 @@ using MassTransit;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
+using Npgsql;
+
+using Polly;
+
 namespace AuctionService;
 
 // ReSharper disable once ClassNeverInstantiated.Global
@@ -46,6 +50,12 @@ public class Program
       // Configures RabbitMQ as the message broker for MassTransit.
       x.UsingRabbitMq((context, cfg) =>
       {
+        cfg.UseMessageRetry(r =>
+        {
+          r.Handle<RabbitMqConnectionException>();
+          r.Interval(5, TimeSpan.FromSeconds(10));
+        });
+
         cfg.Host(builder.Configuration["RabbitMq:Host"],
                  "/",
                  host =>
@@ -79,6 +89,12 @@ public class Program
 
     app.MapControllers();
     app.MapGrpcService<GrpcAuctionService>();
+
+    var retryPolicy = Policy
+                      .Handle<NpgsqlException>()
+                      .WaitAndRetry(5,retryCount => TimeSpan.FromSeconds(10));
+
+    retryPolicy.ExecuteAndCapture(() => DbInitializer.InitDb(app));
 
     try { DbInitializer.InitDb(app); }
     catch (Exception e)
