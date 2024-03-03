@@ -7,8 +7,10 @@
       <Path>tests</Path>
     </attachedFolders>
     <explicitIncludes>
+      <Path>.github</Path>
       <Path>.github/workflows/deploy-identity.yml</Path>
       <Path>.gitignore</Path>
+      <Path>Infra</Path>
       <Path>initial.sh</Path>
       <Path>update_hosts.sh</Path>
     </explicitIncludes>

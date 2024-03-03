@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+spec:
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp
+        image: arandomname/web-app
+        imagePullPolicy: Always
+        env:
+          - name: NEXTAUTH_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: webapp-secret
+                key: authSecret
+          - name: CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: webapp-secret
+                key: clientSecret
+          - name: NEXTAUTH_URL
+            value: https://app.carsties.store
+          - name: API_URL
+            value: http://gateway-clusterip/
+          - name: ID_URL
+            value: https://id.auztion.frankfei.me
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-clusterip
+spec:
+  type: ClusterIP
+  selector:
+    app: webapp
+  ports:
+  - port: 3000
+    targetPort: 3000
+

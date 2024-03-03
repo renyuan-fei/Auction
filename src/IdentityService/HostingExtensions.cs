@@ -78,7 +78,7 @@ internal static class HostingExtensions
       app.Use(async (ctx, next) =>
       {
         var serverUrls = ctx.RequestServices.GetRequiredService<IServerUrls>();
-        serverUrls.Origin = serverUrls.Origin = "https://id.trycatchlearn.com";
+        serverUrls.Origin = serverUrls.Origin = "https://id.auction.frankfei.me";
         await next();
       });
     }
