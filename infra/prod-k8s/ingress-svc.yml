@@ -10,8 +10,8 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - app.auction.store
-    - api.auction.store
+    - app.auctionservice.store
+    - api.auctionservice.store
     secretName: auction-tls
   rules:
   - host: app.auction.store
