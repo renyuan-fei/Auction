@@ -4,7 +4,7 @@
     <developerToolsConfigurations>
       <developerToolConfiguration developerToolId="password-generator" id="0b628ecb-657e-4a07-a18e-b65c466a8b3f" name="Workbench">
         <properties>
-          <property key="length" type="CONFIGURATION" value="kotlin.Int|50" />
+          <property key="length" type="CONFIGURATION" value="kotlin.Int|100" />
           <property key="addSymbols" type="CONFIGURATION" value="kotlin.Boolean|false" />
         </properties>
       </developerToolConfiguration>

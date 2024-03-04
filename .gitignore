@@ -3,4 +3,5 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
-/Auction.sln.DotSettings.user
+/Auction.sln.DotSettings.user!
+/Infra/prod-k8s/prod-secrets.yaml

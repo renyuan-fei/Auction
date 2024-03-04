@@ -21,7 +21,7 @@ spec:
         path: "/"
         backend:
           service:
-            name: webapp-clusterip
+            name: clientapp-clusterip
             port: 
               number: 3000
   - host: api.carsties.store

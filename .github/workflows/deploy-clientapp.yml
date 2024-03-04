@@ -1,16 +1,16 @@
-name: deploy-webapp
+name: deploy-clientapp
 
 on:
   workflow_dispatch:
   push:
     branches: [ "master" ]
     paths:
-      - 'frontend/web-app/**'
+      - 'frontend/client/**'
 
 env:
-  REGISTRY_IMAGE: arandomname/web-app
-  DOCKERFILE: frontend/web-app/Dockerfile
-  DEPLOYMENT_NAME: webapp
+  REGISTRY_IMAGE: arandomname/client-app
+  DOCKERFILE: frontend/client/Dockerfile
+  DEPLOYMENT_NAME: clientapp
 
 jobs:
   build:
