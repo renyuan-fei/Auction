@@ -10,11 +10,11 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - app.carsties.store
-    - api.carsties.store
-    secretName: carsties-tls
+    - app.auction.store
+    - api.auction.store
+    secretName: auction-tls
   rules:
-  - host: app.carsties.store
+  - host: app.auction.store
     http:
       paths:
       - pathType: Prefix
@@ -24,7 +24,7 @@ spec:
             name: clientapp-clusterip
             port: 
               number: 3000
-  - host: api.carsties.store
+  - host: api.auction.store
     http:
       paths:
       - pathType: Prefix

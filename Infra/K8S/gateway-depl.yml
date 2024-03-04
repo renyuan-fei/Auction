@@ -17,7 +17,7 @@ spec:
         imagePullPolicy: Always
         env:
           - name: ClientApp
-            value: https://app.carsties.store
+            value: https://app.auction.store
           - name: IdentityServiceUrl
             value: https://id.auztion.frankfei.me
 ---

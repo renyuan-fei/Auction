@@ -27,7 +27,7 @@ spec:
                 name: clientapp-secret
                 key: clientSecret
           - name: NEXTAUTH_URL
-            value: https://app.carsties.store
+            value: https://app.auction.store
           - name: API_URL
             value: http://gateway-clusterip/
           - name: ID_URL
