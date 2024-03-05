@@ -25,7 +25,7 @@ export const SignalRProvider = ({children, user}: SignalRProviderProps) => {
     const setCurrentPrice = useAuctionsStore(state => state.setCurrentPrice);
     const addBid = useBidStore(state => state.addBid);
     const apiUrl = process.env.NODE_ENV === 'production'
-        ? 'https://api.carsties.com/notifications'
+        ? 'https://api.auctionservice.store/notifications'
         : process.env.NEXT_PUBLIC_NOTIFY_URL
 
     useEffect(() => {
