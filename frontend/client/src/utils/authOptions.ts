@@ -1,7 +1,7 @@
 import {NextAuthOptions} from "next-auth";
 import DuendeIdentityServer6 from "next-auth/providers/duende-identity-server6";
 
-const Identity_Server_Url = process.env.IDENTITY_SERVER_URL;
+const Identity_Server_Url = process.env.IDENTITY_SERVER_URL!;
 const ClientSecret = process.env.CLIENT_SECRET!;
 export const authOptions: NextAuthOptions = {
     session: {
