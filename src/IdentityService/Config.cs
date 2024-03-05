@@ -18,15 +18,6 @@ public static class Config
     {
         new()
         {
-            ClientId = "postman",
-            ClientName = "Postman",
-            ClientSecrets = { new Secret("NotASecret".Sha256()) },
-            AllowedGrantTypes = { GrantType.ResourceOwnerPassword },
-            RedirectUris = { "https://www.getpostman.com/oauth2/callback" },
-            AllowedScopes = { "openid", "profile", "auctionApp" }
-        },
-        new()
-        {
             ClientId = "nextApp",
             ClientName = "nextApp",
             ClientSecrets =
