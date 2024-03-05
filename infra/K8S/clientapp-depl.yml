@@ -30,7 +30,7 @@ spec:
             value: https://app.auctionservice.store
           - name: API_URL
             value: http://gateway-clusterip/
-          - name: ID_URL
+          - name: IDENTITY_SERVER_URL
             value: https://id.auction.frankfei.me
         ports:
         - containerPort: 3000
