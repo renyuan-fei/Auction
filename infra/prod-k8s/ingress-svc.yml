@@ -2,8 +2,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-svc
-  annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
   labels:
     name: ingress-svc
 spec:
@@ -12,9 +10,8 @@ spec:
   - hosts:
     - app.auctionservice.store
     - api.auctionservice.store
-    secretName: auction-tls
   rules:
-  - host: app.auction.store
+  - host: app.auctionservice.store
     http:
       paths:
       - pathType: Prefix
@@ -24,7 +21,7 @@ spec:
             name: clientapp-clusterip
             port: 
               number: 3000
-  - host: api.auction.store
+  - host: api.auctionservice.store
     http:
       paths:
       - pathType: Prefix
