@@ -17,9 +17,9 @@ spec:
         imagePullPolicy: Always
         env:
           - name: ClientApp
-            value: https://app.auction.store
+            value: https://app.auctionservice.store
           - name: IdentityServiceUrl
-            value: https://id.auztion.frankfei.me
+            value: https://id.auction.frankfei.me
 ---
 apiVersion: v1
 kind: Service

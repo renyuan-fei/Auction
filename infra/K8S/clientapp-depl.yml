@@ -27,11 +27,11 @@ spec:
                 name: clientapp-secret
                 key: clientSecret
           - name: NEXTAUTH_URL
-            value: https://app.auction.store
+            value: https://app.auctionservice.store
           - name: API_URL
             value: http://gateway-clusterip/
           - name: ID_URL
-            value: https://id.auztion.frankfei.me
+            value: https://id.auction.frankfei.me
         ports:
         - containerPort: 3000
 ---

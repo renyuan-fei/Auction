@@ -34,7 +34,7 @@ spec:
                 name: bid-secret
                 key: connString
           - name: IdentityServiceUrl
-            value: https://id.auztion.frankfei.me
+            value: https://id.auction.frankfei.me
           - name: GrpcAuction
             value: http://auction-clusterip:7777
 ---
