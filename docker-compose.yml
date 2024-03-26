@@ -59,10 +59,10 @@ services:
       - postgres
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
-      - ClientApp=http://app.auction.com
+      - ClientApp=http://app.auctionservice.com
       - ConnectionStrings__DefaultConnection=Server=postgres;Port=5432;User Id=postgres;Password=postgrespw;Database=identity
       - ASPNETCORE_URLS=http://+:80
-      - VIRTUAL_HOST=id.auction.com
+      - VIRTUAL_HOST=id.auctionservice.com
     networks:
       custom:
         ipv4_address: 10.5.0.200
@@ -108,8 +108,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
       - ASPNETCORE_URLS=http://+:80
-      - ClientApp=https://app.auction.com
-      - VIRTUAL_HOST=api.auction.com
+      - ClientApp=https://app.auctionservice.com
+      - VIRTUAL_HOST=api.auctionservice.com
     networks:
       custom:
   postgres:
@@ -150,15 +150,15 @@ services:
     volumes:
       - /var/lib/web/data
     extra_hosts:
-      - id.auction.com:10.5.0.200
+      - id.auctionservice.com:10.5.0.200
     environment:
       - NEXTAUTH_SECRET=I3DfhyrhvBT1o7bbaK1gCVgOMngHoUdjPfD3Qy99WXZnmKESBo
-      - NEXTAUTH_URL=http://app.auction.com
+      - NEXTAUTH_URL=http://app.auctionservice.com
       - NEXTAUTH_URL_INTERNAL=http://client:3000
       - API_URL=http://gateway-service/
-      - IDENTITY_SERVER_URL=http://id.auction.com
+      - IDENTITY_SERVER_URL=http://id.auctionservice.com
       - NEXT_PUBLIC_NOTIFY_URL=https://gateway-service/notifications
-      - VIRTUAL_HOST=app.auction.com
+      - VIRTUAL_HOST=app.auctionservice.com
       - Virtual_PORT=3000
     networks:
       custom:
