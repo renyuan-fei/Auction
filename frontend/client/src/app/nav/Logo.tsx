@@ -29,7 +29,7 @@ export const Logo = () => {
             cursor-pointer'
             onClick={onReset}>
             <AiOutlineCar size={34}/>
-            <div>Carsties Auctions</div>
+            <div>Auctions Service</div>
         </div>
     );
 }

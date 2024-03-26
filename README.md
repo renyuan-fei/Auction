@@ -3,6 +3,10 @@
 <p align="center"><img src="https://socialify.git.ci/renyuan-fei/Auction/image?description=1&amp;descriptionEditable=A%20Website%20for%20%20auctioning%20cars%20in%20real-time&amp;language=1&amp;name=1&amp;owner=1&amp;pattern=Plus&amp;theme=Auto" alt="project-image"></p>
 This is a repository for the Microservices 'Auction' app that is used for auctioning cars.
 
+<h2>🚀 Demo</h2>
+
+[https://app.auctionservice.store](https://app.auctionservice.store)
+
 <h2>🧐 Features</h2>
 
 Here're some of the project's best features:
@@ -44,11 +48,14 @@ Technologies used in the project:
 * PostgreSQL
 * MonaoDB
 * gPRC
+* Polly
 * SignalR
 * Nginx
 * RabbitMQ
 * IdentityServer
 * Docker
+* Kubernetes(K8S)
+* Xunit
 
 <h2>🛠️ Installation Steps:</h2>
 
@@ -57,7 +64,7 @@ Technologies used in the project:
 ```
 git clone https://github.com/renyuan-fei/Auction.git
 ```
-2. Change into the Carsties directory
+2. Change into the Auction directory
 ```
 cd Auction
 ```
